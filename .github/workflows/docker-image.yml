@@ -23,9 +23,15 @@ jobs:
         DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       run: 
-        echo "Iniciando login"
         docker login -y $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
-        echo "Finalizando login"
+        
+    - name: Build Docker Image
+      run: 
+        docker build -t adriayc/docker-graphql-actions:0.0.2 .
+
+    - name: Push Docker Image
+      run: 
+        docker push adriayc/docker-graphql-actions:0.0.2
     
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
