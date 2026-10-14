@@ -18,6 +18,14 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Git Semantic Version
+      uses: PaulHatch/semantic-version@v6.0.2
+      with:
+        major_pattern: "major:"
+        minor_pattern: "feat:"
+        version_format: "${major}.${minor}.${patch}-prerelease${increment}"
+      id: version
+
     - name: Docker login
       env:
         DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -25,15 +33,15 @@ jobs:
       run: 
         docker login -y $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
         
-    - name: Build Docker Image
-      run: 
-        docker build -t adriayc/docker-graphql-actions:0.0.2 .
-        docker build -t adriayc/docker-graphql-actions:latest .
+    # - name: Build Docker Image
+    #   run: 
+    #     docker build -t adriayc/docker-graphql-actions:0.0.2 .
+    #     docker build -t adriayc/docker-graphql-actions:latest .
 
-    - name: Push Docker Image
-      run: 
-        docker push adriayc/docker-graphql-actions:0.0.2
-        docker push adriayc/docker-graphql-actions:latest
+    # - name: Push Docker Image
+    #   run: 
+    #     docker push adriayc/docker-graphql-actions:0.0.2
+    #     docker push adriayc/docker-graphql-actions:latest
     
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
