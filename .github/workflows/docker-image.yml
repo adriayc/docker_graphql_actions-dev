@@ -30,8 +30,10 @@ jobs:
       env:
         DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        VERSION: ${{ steps.version.outputs.version }}
       run: 
-        docker login -y $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+        docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+        echo "Docker version = $VERSION"
         
     # - name: Build Docker Image
     #   run: 
